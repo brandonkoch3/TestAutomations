@@ -12,11 +12,11 @@ name: SNKRS-Release-Weekly-PR-Automation
 # Runs the automation every Thursday at 10:00am (time zone support is not
 # yet available.  The CRON job defaults to UTC, or +5 from EST).
 on:
+  push:
+    branches:
+      - test-automation
   #schedule:
     #- cron: '*/15 * * * *'
-  push:
-    - branches:
-      - test-automation
 
   # Allows the automation to be run manually from the Workflows pane.
   workflow_dispatch:
