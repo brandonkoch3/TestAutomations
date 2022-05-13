@@ -14,7 +14,7 @@ name: SNKRS-Release-Weekly-PR-Automation
 on:
   push:
     branches:
-      - test
+      - '**'
   #schedule:
     #- cron: '*/15 * * * *'
 
