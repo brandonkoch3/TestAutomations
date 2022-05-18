@@ -37,7 +37,9 @@ jobs:
     - name: create-weekly-branch
       run: git checkout -b SNKRS-${{ steps.readappversion.outputs.version }}-Weekly-${{ steps.getcurrentdate.outputs.date }}
     - name: Push new branch
-      run: git push origin SNKRS-${{ steps.readappversion.outputs.version }}-Weekly-${{ steps.getcurrentdate.outputs.date }}
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: generate-pr-title
       id: generateprtitle
       run: echo "::set-output name=prtitle::[${{ steps.readappversion.outputs.version }}] [Release Integration] Weekly RC Merge to SNKRS-release-integration"
