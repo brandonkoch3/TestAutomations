@@ -28,9 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        persist-credentials: false
-        fetch-depth: 0
+    - name: Create report file
+      run: date +%s > report.txt
     - name: read-app-version
       id: readappversion
       run: echo "::set-output name=version::$(cat snkrs/SNKRS.xcconfig | grep -m1 'APPLICATION_VERSION' | cut -d'=' -f2 | tr -d ';' | tr -d ' ')"
@@ -39,10 +38,10 @@ jobs:
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
     - name: create-weekly-branch
       run: git checkout -b SNKRS-${{ steps.readappversion.outputs.version }}-Weekly-${{ steps.getcurrentdate.outputs.date }}
-    - name: Push new branch
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: push-branch
+      run: |
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        git push
     - name: generate-pr-title
       id: generateprtitle
       run: echo "::set-output name=prtitle::[${{ steps.readappversion.outputs.version }}] [Release Integration] Weekly RC Merge to SNKRS-release-integration"
