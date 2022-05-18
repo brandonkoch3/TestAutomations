@@ -40,7 +40,7 @@ jobs:
       run: git checkout -b SNKRS-${{ steps.readappversion.outputs.version }}-Weekly-${{ steps.getcurrentdate.outputs.date }}
     - name: push-branch
       run: |
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        #git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
         git push --set-upstream origin SNKRS-4.29.0-Weekly-2022-05-18
     - name: generate-pr-title
       id: generateprtitle
