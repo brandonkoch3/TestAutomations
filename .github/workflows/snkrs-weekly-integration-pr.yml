@@ -38,17 +38,19 @@ jobs:
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
     - name: create-weekly-branch
       run: git checkout -b SNKRS-${{ steps.readappversion.outputs.version }}-Weekly-${{ steps.getcurrentdate.outputs.date }}
-    - name: push-branch
-      run: |
+    - name: Create report file
+      run: date +%s > report.txt
+    #- name: push-branch
+      #run: |
         #git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-        git push --set-upstream origin SNKRS-4.29.0-Weekly-2022-05-18
+        #git push --set-upstream origin SNKRS-4.29.0-Weekly-2022-05-18
     - name: generate-pr-title
       id: generateprtitle
       run: echo "::set-output name=prtitle::[${{ steps.readappversion.outputs.version }}] [Release Integration] Weekly RC Merge to SNKRS-release-integration"
     - name: pull-request
       uses: repo-sync/pull-request@v2
       with:
-        source_branch: "SNKRS-${{ steps.readappversion.outputs.version }}-Weekly-${{ steps.getcurrentdate.outputs.date }}"
+        #source_branch: "SNKRS-${{ steps.readappversion.outputs.version }}-Weekly-${{ steps.getcurrentdate.outputs.date }}"
         destination_branch: "SNKRS-release-integration"
         pr_title: ${{ steps.generateprtitle.outputs.prtitle }}
         pr_body: "This is an automated pull request to merge the latest changes from develop into SNKRS-release-integration."
