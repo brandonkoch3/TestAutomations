@@ -26,11 +26,11 @@ on:
 jobs:
   pull-request:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+        fetch-depth: 0
     - name: read-app-version
       id: readappversion
       run: echo "::set-output name=version::$(cat snkrs/SNKRS.xcconfig | grep -m1 'APPLICATION_VERSION' | cut -d'=' -f2 | tr -d ';' | tr -d ' ')"
